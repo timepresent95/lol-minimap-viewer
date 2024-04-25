@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SearchBar from "@/5.entities/SummonerSearchBar/ui";
+import SearchBar from "@/4.features/SummonerSearchBar/ui";
 
 function HomePage() {
   return (
