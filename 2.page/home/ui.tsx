@@ -1,19 +1,17 @@
 import styled from "styled-components";
-import SearchBar from "../../6.shared/ui/SearchBar";
+import SearchBar from "@/5.entities/SummonerSearchBar/ui";
 
 function HomePage() {
   return (
     <Root>
-      <SearchBar
-        searchAction={() => {}}
-        placeholder="소환사이름을 입력해주세요"
-      />
+      <SearchBar />
     </Root>
   );
 }
 
 const Root = styled.main`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
