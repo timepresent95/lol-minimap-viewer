@@ -6,8 +6,7 @@ export async function getSummonerInfoByAccount(
   tagLine: string
 ): Promise<Summoner> {
   const path = `/summoner/${gameName}/${tagLine}`;
-  const response = await fetchQuery(path, { method: "get" }, [
+  return await fetchQuery(path, { method: "get" }, [
     `summoner-${gameName}-${tagLine}`,
   ]);
-  return response.json();
 }
