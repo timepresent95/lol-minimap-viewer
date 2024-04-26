@@ -26,13 +26,12 @@
     }
   },
   "include": [
-    "1.app",
-    "2.page",
-    "3.widget",
-    "4.features",
-    "5.entities",
-    "6.shared",
-    "**/*.tsx"
+    "1.app/**/*",
+    "2.page/**/*",
+    "3.widget/**/*",
+    "4.features/**/*",
+    "5.entities/**/*",
+    "6.shared/**/*",
   ],
   "references": [
     {
