@@ -2,10 +2,12 @@ import { useState } from "react";
 
 import { Button, Input } from "@/6.shared/ui";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 function SummonerSearchBar() {
   const [gameName, setGameName] = useState("");
   const [tagLine, setTagLine] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -26,7 +28,14 @@ function SummonerSearchBar() {
             />
           </InputItem>
         </InputContainer>
-        <Button>검색</Button>
+        <Button
+          onClick={() => {
+            const url = `/summoner/${gameName}/${tagLine}`;
+            console.log(url);
+            navigate(url);
+          }}>
+          검색
+        </Button>
       </SearchContainer>
       <FindAccountLink
         href="https://account.riotgames.com/#riot-id"

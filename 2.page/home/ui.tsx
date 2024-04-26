@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import SearchBar from "@/4.features/SummonerSearchBar/ui";
+import SummonerSearchBar from "@/4.features/SummonerSearch/ui";
 
 function HomePage() {
   return (
     <Root>
-      <SearchBar />
+      <SummonerSearchBar />
     </Root>
   );
 }
