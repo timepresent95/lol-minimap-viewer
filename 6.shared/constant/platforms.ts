@@ -1,0 +1,18 @@
+export const platformHosts = {
+  BR1: { platform: "BR1", host: "br1.api.riotgames.com" },
+  EUN1: { platform: "EUN1", host: "eun1.api.riotgames.com" },
+  EUW1: { platform: "EUW1", host: "euw1.api.riotgames.com" },
+  JP1: { platform: "JP1", host: "jp1.api.riotgames.com" },
+  KR: { platform: "KR", host: "kr.api.riotgames.com" },
+  LA1: { platform: "LA1", host: "la1.api.riotgames.com" },
+  LA2: { platform: "LA2", host: "la2.api.riotgames.com" },
+  NA1: { platform: "NA1", host: "na1.api.riotgames.com" },
+  OC1: { platform: "OC1", host: "oc1.api.riotgames.com" },
+  TR1: { platform: "TR1", host: "tr1.api.riotgames.com" },
+  RU: { platform: "RU", host: "ru.api.riotgames.com" },
+  PH2: { platform: "PH2", host: "ph2.api.riotgames.com" },
+  SG2: { platform: "SG2", host: "sg2.api.riotgames.com" },
+  TH2: { platform: "TH2", host: "th2.api.riotgames.com" },
+  TW2: { platform: "TW2", host: "tw2.api.riotgames.com" },
+  VN2: { platform: "VN2", host: "vn2.api.riotgames.com" },
+};
