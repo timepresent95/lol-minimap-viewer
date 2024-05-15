@@ -26,7 +26,6 @@ function LeagueComponent() {
 }
 
 const League = styled.div`
-  max-width: 36rem;
   width: 100%;
   border-radius: 4px;
   background-color: #475569; //600
@@ -61,12 +60,12 @@ const Tier = styled.p`
 `;
 const LP = styled.p`
   font-size: 1.2rem;
-  color: #94a3b8;
+  color: #94a3b8; //400
 `;
 
 const WinLoseContainer = styled.div`
   margin-left: auto;
-  color: #94a3b8;
+  color: #94a3b8; //400
 `;
 
 LeagueComponent.displayName = "LeagueComponent";
