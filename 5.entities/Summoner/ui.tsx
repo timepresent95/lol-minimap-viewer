@@ -21,7 +21,7 @@ function SummonerComponent(props: Props) {
       <SummonerInfo>
         <SummonerName>
           <GameName>{props.gameName}</GameName>
-          <TagLine>{props.tagLine}</TagLine>
+          <TagLine>#{props.tagLine}</TagLine>
         </SummonerName>
         <RankInfo>
           래더 랭킹 <RankInfoStress>176,372위</RankInfoStress>&nbsp;(상위 5.63%)
