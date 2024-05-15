@@ -1,11 +1,12 @@
+import { Rank } from "@/5.entities/League/model";
 import { fetchQuery } from "@/6.shared/lib/api";
-
 interface Response {
   gameName: string;
   tagLine: string;
   profileIconId: number;
   summonerLevel: number;
   revisionDate: Date;
+  ranks: Rank[];
 }
 
 export async function getSummonerInfoByAccount(

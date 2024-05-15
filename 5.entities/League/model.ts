@@ -16,3 +16,13 @@ export interface LeagueEntry {
   freshBlood: boolean;
   inactive: boolean;
 }
+
+export interface Rank {
+  leaguePoints: number;
+  wins: number;
+  losses: number;
+  winingRate: number;
+  tier: string;
+  queue: string;
+  rank: number;
+}
