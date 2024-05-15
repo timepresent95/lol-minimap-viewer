@@ -6,8 +6,14 @@ import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 function SummonerPage() {
-  const { gameName, tagLine, profileIconId, summonerLevel, revisionDate } =
-    useLoaderData() as Awaited<ReturnType<typeof getSummonerInfoByAccount>>;
+  const {
+    gameName,
+    tagLine,
+    profileIconId,
+    summonerLevel,
+    revisionDate,
+    ranks,
+  } = useLoaderData() as Awaited<ReturnType<typeof getSummonerInfoByAccount>>;
 
   return (
     <PageContainer>
@@ -19,7 +25,9 @@ function SummonerPage() {
           summonerLevel={summonerLevel}
           revisionDate={revisionDate}
         />
-        <LeagueComponent />
+        {ranks.map((rank) => (
+          <LeagueComponent rankInfo={rank} />
+        ))}
       </UserInfo>
     </PageContainer>
   );

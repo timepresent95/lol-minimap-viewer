@@ -1,24 +1,34 @@
 import styled from "styled-components";
+import { Rank } from "./model";
+import { capitalizeFirst } from "@/6.shared/lib/string";
 
-function LeagueComponent() {
+interface Props {
+  rankInfo: Rank;
+}
+function LeagueComponent({ rankInfo }: Props) {
+  const tierName = capitalizeFirst(rankInfo.tier);
   return (
     <League>
-      <LeagueTitle>솔로 랭크</LeagueTitle>
+      <LeagueTitle>{rankInfo.queue}</LeagueTitle>
       <LeagueContent>
         <EmblemContainer>
-          <img
-            src="/public/image/emblem/Bronze.png"
+          <Emblem
+            src={`/public/image/emblem/${tierName}.png`}
             alt="emblem"
-            width="100%"
+            width="80%"
           />
         </EmblemContainer>
         <Info>
-          <Tier>Emerald 1</Tier>
-          <LP>67 LP</LP>
+          <Tier>
+            {tierName} {rankInfo.rank}
+          </Tier>
+          <LP>{rankInfo.leaguePoints} LP</LP>
         </Info>
         <WinLoseContainer>
-          <p>52승 32패</p>
-          <p>승률 62%</p>
+          <p>
+            {rankInfo.wins}승 {rankInfo.losses}패
+          </p>
+          <p>승률 {rankInfo.winingRate}%</p>
         </WinLoseContainer>
       </LeagueContent>
     </League>
@@ -49,6 +59,13 @@ const EmblemContainer = styled.div`
   width: 7.2rem;
   height: 7.2rem;
   background-color: #334155; //700
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Emblem = styled.img`
+  transform: translateY(5%);
 `;
 
 const Info = styled.div`
@@ -66,6 +83,7 @@ const LP = styled.p`
 const WinLoseContainer = styled.div`
   margin-left: auto;
   color: #94a3b8; //400
+  text-align: right;
 `;
 
 LeagueComponent.displayName = "LeagueComponent";
