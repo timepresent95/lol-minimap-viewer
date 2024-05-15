@@ -1,19 +1,26 @@
 // import styled from "styled-components";
+import { getSummonerInfoByAccount } from "@/4.features/SummonerSearch/api";
 import LeagueComponent from "@/5.entities/League/ui";
 import SummonerComponent from "@/5.entities/Summoner/ui";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 function SummonerPage() {
-  const data = useLoaderData();
+  const { gameName, tagLine, profileIconId, summonerLevel, revisionDate } =
+    useLoaderData() as Awaited<ReturnType<typeof getSummonerInfoByAccount>>;
 
   return (
     <PageContainer>
       <UserInfo>
-        <SummonerComponent />
+        <SummonerComponent
+          gameName={gameName}
+          tagLine={tagLine}
+          profileIconId={profileIconId}
+          summonerLevel={summonerLevel}
+          revisionDate={revisionDate}
+        />
         <LeagueComponent />
       </UserInfo>
-      <code>{JSON.stringify(data)}</code>
     </PageContainer>
   );
 }
