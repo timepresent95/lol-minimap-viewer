@@ -1,19 +1,23 @@
 import styled from "styled-components";
 
-function SummonerComponent() {
+interface Props {
+  profileIconId: number;
+  summonerLevel: number;
+}
+function SummonerComponent(props: Props) {
   return (
     <Summoner>
       <ProfileIcon>
         <ProfileImage
-          src="/public/image/profileicon/0.png"
+          src={`/public/image/profileicon/${props.profileIconId}.png`}
           alt="profile icon"
         />
-        <SummonerLevel>154</SummonerLevel>
+        <SummonerLevel>{props.summonerLevel}</SummonerLevel>
       </ProfileIcon>
       <SummonerInfo>
         <SummonerName>
           <GameName>chichchic</GameName>
-          <TagName>#KR1</TagName>
+          <TagLine>#KR1</TagLine>
         </SummonerName>
         <RankInfo>
           래더 랭킹 <RankInfoStress>176,372위</RankInfoStress>&nbsp;(상위 5.63%)
@@ -59,7 +63,7 @@ const SummonerName = styled.div`
 const GameName = styled.span`
   margin-right: 1rem;
 `;
-const TagName = styled.span`
+const TagLine = styled.span`
   color: #94a3b8; //400
 `;
 const RankInfo = styled.p`
