@@ -23,6 +23,6 @@ export interface Rank {
   losses: number;
   winingRate: number;
   tier: string;
-  queue: string;
+  queue: "자유 랭크" | "솔로 랭크";
   rank: number;
 }

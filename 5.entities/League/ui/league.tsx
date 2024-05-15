@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Rank } from "./model";
 import { capitalizeFirst } from "@/6.shared/lib/string";
+import { Rank } from "../model";
 
 interface Props {
   rankInfo: Rank;

@@ -1,6 +1,5 @@
-// import styled from "styled-components";
 import { getSummonerInfoByAccount } from "@/4.features/SummonerSearch/api";
-import LeagueComponent from "@/5.entities/League/ui";
+import { LeagueUi, UnrankedLeagueUi } from "@/5.entities/League/ui";
 import SummonerComponent from "@/5.entities/Summoner/ui";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
@@ -15,6 +14,9 @@ function SummonerPage() {
     ranks,
   } = useLoaderData() as Awaited<ReturnType<typeof getSummonerInfoByAccount>>;
 
+  const soloRank = ranks.find((v) => v.queue === "솔로 랭크");
+  const flexRank = ranks.find((v) => v.queue === "자유 랭크");
+
   return (
     <PageContainer>
       <UserInfo>
@@ -25,9 +27,16 @@ function SummonerPage() {
           summonerLevel={summonerLevel}
           revisionDate={revisionDate}
         />
-        {ranks.map((rank) => (
-          <LeagueComponent rankInfo={rank} />
-        ))}
+        {soloRank ? (
+          <LeagueUi rankInfo={soloRank} />
+        ) : (
+          <UnrankedLeagueUi queue="솔로 랭크" />
+        )}
+        {flexRank ? (
+          <LeagueUi rankInfo={flexRank} />
+        ) : (
+          <UnrankedLeagueUi queue="자유 랭크" />
+        )}
       </UserInfo>
     </PageContainer>
   );
