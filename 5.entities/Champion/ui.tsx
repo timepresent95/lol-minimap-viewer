@@ -60,7 +60,7 @@ const ChampionLevel = styled.span<{ $direction: "left" | "right" }>`
 
   color: white;
   font-size: 1rem;
-  background-color: #334155; //700
+  background-color: var(--slate-700); //700
   padding: 1px;
   ${(props) =>
     props.$direction === "left"

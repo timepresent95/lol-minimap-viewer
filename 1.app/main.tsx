@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 
-import "./default.scss";
+import "./style/index.scss";
 
 import HomePage from "@/2.page/home/ui";
 import SummonerPage from "@/2.page/summoner/ui";

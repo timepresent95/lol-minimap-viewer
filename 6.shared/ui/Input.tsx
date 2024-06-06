@@ -7,7 +7,7 @@ const Input = styled.input`
   height: 4rem;
   padding: 0 1rem;
   border-radius: 4px;
-  border: 1px solid #000;
+  border: 1px solid black;
   width: 100%;
 `;
 

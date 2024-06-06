@@ -17,7 +17,7 @@ const League = styled.div`
   justify-content: space-between;
   width: 100%;
   border-radius: 4px;
-  background-color: #475569; //600
+  background-color: var(--slate-600); //600
   padding: 0.8rem 1.6rem;
   font-size: 1.6rem;
 `;
@@ -27,7 +27,7 @@ const LeagueTitle = styled.span`
 `;
 
 const UnrankedText = styled.span`
-  color: #94a3b8; //400
+  color: var(--slate-400); //400
   font-weight: bold;
 `;
 

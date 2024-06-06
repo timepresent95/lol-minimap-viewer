@@ -36,7 +36,7 @@ function SummonerComponent(props: Props) {
 
 const Summoner = styled.div`
   display: flex;
-  background-color: #334155; //700
+  background-color: var(--slate-700); //700
   gap: 2rem;
   padding: 2rem 4rem 1rem 1rem;
   border-radius: 4px;
@@ -59,7 +59,7 @@ const SummonerLevel = styled.span`
   left: 50%;
   transform: translate(-50%, 50%);
   border-radius: 8px;
-  background-color: #475569; //600
+  background-color: var(--slate-600); //600
   padding: 4px 8px;
 `;
 
@@ -77,18 +77,18 @@ const GameName = styled.span`
   margin-right: 1rem;
 `;
 const TagLine = styled.span`
-  color: #94a3b8; //400
+  color: var(--slate-400);
 `;
 const RankInfo = styled.p`
-  color: #94a3b8; //400
+  color: var(--slate-400);
   flex: 1;
 `;
 const RankInfoStress = styled.span`
-  color: #60a5fa; //blue 400
+  color: var(--blue-400);
 `;
 
 const UpdateLog = styled.p`
-  color: #94a3b8; //400
+  color: var(--slate-400);
 `;
 
 SummonerComponent.displayName = "SummonerComponent";

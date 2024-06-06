@@ -5,12 +5,12 @@ const Button = styled.button`
   padding: 0 1rem;
   color: white;
   height: 4rem;
-  background: #228be6;
+  background: var(--blue-600);
   &:hover {
-    background: #339af0;
+    background: var(--blue-500);
   }
   &:active {
-    background: #1c7ed6;
+    background: var(--blue-700);
   }
 `;
 

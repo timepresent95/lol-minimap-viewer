@@ -69,12 +69,12 @@ const FindAccountLink = styled.a`
   display: block;
   font-size: 1.3rem;
   text-decoration: underline;
-  color: #555;
+  color: var(--slate-500);
   &:hover {
-    color: #339af0;
+    color: var(--blue-500);
   }
   &:active {
-    color: #1c7ed6;
+    color: var(--blue-700);
   }
 `;
 

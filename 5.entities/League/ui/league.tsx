@@ -38,7 +38,7 @@ function LeagueComponent({ rankInfo }: Props) {
 const League = styled.div`
   width: 100%;
   border-radius: 4px;
-  background-color: #475569; //600
+  background-color: var(--slate-600); //600
 `;
 
 const LeagueTitle = styled.h6`
@@ -58,7 +58,7 @@ const EmblemContainer = styled.div`
   border-radius: 100%;
   width: 7.2rem;
   height: 7.2rem;
-  background-color: #334155; //700
+  background-color: var(--slate-700); //700
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,14 +76,19 @@ const Tier = styled.p`
   font-weight: bold;
 `;
 const LP = styled.p`
+  margin-top: 0.5rem;
   font-size: 1.2rem;
-  color: #94a3b8; //400
+  color: var(--slate-400); //400
 `;
 
 const WinLoseContainer = styled.div`
   margin-left: auto;
-  color: #94a3b8; //400
+  color: var(--slate-400); //400
   text-align: right;
+`;
+
+const WinRate = styled.p`
+  margin-top: 0.5rem;
 `;
 
 LeagueComponent.displayName = "LeagueComponent";
