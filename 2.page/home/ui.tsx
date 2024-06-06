@@ -4,10 +4,16 @@ import SummonerSearchBar from "@/4.features/SummonerSearch/ui";
 function HomePage() {
   return (
     <Root>
+      <ServiceTitle>LOL Minimap Viewer</ServiceTitle>
       <SummonerSearchBar />
     </Root>
   );
 }
+
+const ServiceTitle = styled.h1`
+  margin-bottom: 4rem;
+  font-size: 4rem;
+`;
 
 const Root = styled.main`
   display: flex;
