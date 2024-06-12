@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 public/image/profileicon
+public/image/arena
+public/image/perk
+
+script/perk/assets
+script/augment/assets
