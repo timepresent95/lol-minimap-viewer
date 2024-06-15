@@ -2,26 +2,24 @@ import { HTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import { Champion } from "./model";
 
-const BASE_URL = "https://ddragon.leagueoflegends.com/cdn/14.10.1/img/champion";
-
 interface Props extends Champion, Omit<HTMLAttributes<HTMLDivElement>, "id"> {
   fullRounded?: boolean;
   size?: string;
   levelDirection?: "left" | "right";
+  championImgUrl: string;
 }
 
 function ChampionComponent({
-  name,
+  championImgUrl,
   level,
   fullRounded,
   size,
   levelDirection = "left",
   ...props
 }: Props) {
-  const targetImageUrl = BASE_URL + `/${name}.png`;
   return (
     <ChampionContainer {...props} $size={size} $levelDirection={levelDirection}>
-      <ChampionPortrait src={targetImageUrl} $fullRounded={fullRounded} />
+      <ChampionPortrait src={championImgUrl} $fullRounded={fullRounded} />
       {level && (
         <ChampionLevel $direction={levelDirection}>{level}</ChampionLevel>
       )}

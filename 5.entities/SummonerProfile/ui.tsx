@@ -6,14 +6,20 @@ interface Props {
   tagLine: string;
   profileIconId: number;
   summonerLevel: number;
-  revisionDate: Date;
+  updatedAt: Date;
 }
-function SummonerComponent(props: Props) {
+
+const PROFILE_ICON_IMAGE_BASE_URL =
+  "https://ddragon.leagueoflegends.com/cdn/14.11.1/img/profileicon";
+
+function SummonerProfile(props: Props) {
+  const updatedAt = dayjs().diff(props.updatedAt, "h");
+
   return (
-    <Summoner>
+    <Root>
       <ProfileIcon>
         <ProfileImage
-          src={`/public/image/profileicon/${props.profileIconId}.png`}
+          src={`${PROFILE_ICON_IMAGE_BASE_URL}/${props.profileIconId}.png`}
           alt="profile icon"
         />
         <SummonerLevel>{props.summonerLevel}</SummonerLevel>
@@ -23,18 +29,16 @@ function SummonerComponent(props: Props) {
           <GameName>{props.gameName}</GameName>
           <TagLine>#{props.tagLine}</TagLine>
         </SummonerName>
-        <RankInfo>
-          래더 랭킹 <RankInfoStress>176,372위</RankInfoStress>&nbsp;(상위 5.63%)
-        </RankInfo>
         <UpdateLog>
-          최근 업데이트: {dayjs().diff(props.revisionDate, "h")}시간 전
+          최근 업데이트:{" "}
+          {updatedAt === 0 ? "1 시간 미만 전" : `${updatedAt} 시간 전`}
         </UpdateLog>
       </SummonerInfo>
-    </Summoner>
+    </Root>
   );
 }
 
-const Summoner = styled.div`
+const Root = styled.div`
   display: flex;
   background-color: var(--slate-700); //700
   gap: 2rem;
@@ -79,17 +83,9 @@ const GameName = styled.span`
 const TagLine = styled.span`
   color: var(--slate-400);
 `;
-const RankInfo = styled.p`
-  color: var(--slate-400);
-  flex: 1;
-`;
-const RankInfoStress = styled.span`
-  color: var(--blue-400);
-`;
-
 const UpdateLog = styled.p`
   color: var(--slate-400);
 `;
 
-SummonerComponent.displayName = "SummonerComponent";
-export default SummonerComponent;
+SummonerProfile.displayName = "SummonerComponent";
+export default SummonerProfile;

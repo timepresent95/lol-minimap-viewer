@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Rank } from "../model";
+import { RankInfo } from "../model";
 
-type Props = Pick<Rank, "queue">;
+type Props = Pick<RankInfo, "queue">;
 
 function UnrankedLeagueComponent({ queue }: Props) {
   return (

@@ -1,55 +1,23 @@
-import { Champion } from "@/5.entities/Champion/model";
 import ChampionComponent from "@/5.entities/Champion/ui";
 import styled from "styled-components";
+import { Match, Participant } from "../model";
 
-type Item = number | undefined;
-
-interface Participant {
-  champion: Champion;
-  spell1: number;
-  spell2: number;
-  rune1: number;
-  rune2: number;
-  gameName: string;
-  league?: {
-    rank: string;
-    tier: string;
-  };
-  level: number;
-  kills: number;
-  deathes: number;
-  assistants: number;
-  killAssistantRate: number;
-  attacks: number;
-  depenses: number;
-  controlWards: number;
-  setWards: number;
-  removeWards: number;
-  totalCs: number;
-  csPerMin: number;
-  items: [Item, Item, Item, Item, Item, Item];
-  wardItem: number;
-}
-
-export interface MatchTeamMeta {
-  isWin: boolean;
+interface Props {
+  matchInfo: Match;
+  win: boolean;
   isBlueTeam: boolean;
-  participants: [
-    Participant,
-    Participant,
-    Participant,
-    Participant,
-    Participant
-  ];
+  members: (Participant & { killAssistantRate: number })[];
 }
 
-interface Props extends MatchTeamMeta {}
-
-function MatchTeamComponent({ isWin, isBlueTeam, participants }: Props) {
-  const gameResult = isWin ? "승리" : "패배";
+function MatchTeamComponent({ matchInfo, win, isBlueTeam, members }: Props) {
+  const gameResult = win ? "승리" : "패배";
   const teamType = isBlueTeam ? "블루팀" : "레드팀";
-  const maxAmount = participants.reduce(
-    (acc, cur) => Math.max(acc, Math.max(cur.attacks, cur.depenses)),
+  const maxAmount = members.reduce(
+    (acc, cur) =>
+      Math.max(
+        acc,
+        Math.max(cur.totalDamageDealtToChampions, cur.totalDamageTaken)
+      ),
     0
   );
   return (
@@ -66,72 +34,79 @@ function MatchTeamComponent({ isWin, isBlueTeam, participants }: Props) {
           <th>아이템</th>
         </thead>
         <tbody>
-          {participants.map((v) => (
+          {members.map((v) => (
             <tr>
               <ChampionInfo>
                 <ChampionComponent
-                  {...v.champion}
+                  championImgUrl={v.championImgUrl}
+                  name={v.championName}
+                  level={v.champLevel}
                   fullRounded={true}
                   size="3.2rem"
                 />
                 <div>
-                  <span>{v.spell1}</span>
-                  <span>{v.spell2}</span>
-                  <span>{v.rune1}</span>
-                  <span>{v.rune2}</span>
+                  <span>{v.summoner1Id}</span>
+                  <span>{v.summoner2Id}</span>
+                  <span>{v.primaryPerkStyle}</span>
+                  <span>{v.subPerkStyle}</span>
                 </div>
                 <div>
-                  <span>{v.gameName}</span>
-                  {v.league ? (
-                    <span>
-                      {v.league.rank}&nbsp;
-                      {v.league.tier}
-                    </span>
-                  ) : (
-                    <span>Level {v.level}</span>
-                  )}
+                  <span>{v.riotIdGameName}</span>
                 </div>
               </ChampionInfo>
               <td>
                 <span>
-                  {v.kills}/{v.deathes}/{v.assistants}&nbsp;(
+                  {v.kills}/{v.deaths}/{v.assists}&nbsp;(
                   {v.killAssistantRate}%)
                 </span>
                 <span>
-                  {Math.round(((v.kills + v.assistants) / v.deathes) * 100) /
-                    100}
+                  {Math.round(((v.kills + v.assists) / v.deaths) * 100) / 100}
                   :1
                 </span>
               </td>
               <td>
                 <div>
-                  <span>{v.attacks}</span>
-                  <progress value={Math.round((v.attacks / maxAmount) * 100)} />
+                  <span>{v.totalDamageDealtToChampions}</span>
+                  <progress
+                    value={Math.round(
+                      (v.totalDamageDealtToChampions / maxAmount) * 100
+                    )}
+                  />
                 </div>
                 <div>
-                  <span>{v.depenses}</span>
+                  <span>{v.totalDamageTaken}</span>
                   <progress
-                    value={Math.round((v.depenses / maxAmount) * 100)}
+                    value={Math.round((v.totalDamageTaken / maxAmount) * 100)}
                   />
                 </div>
               </td>
               <td>
-                <span>{v.controlWards}</span>
+                <span>{v.detectorWardsPlaced}</span>
                 <span>
-                  {v.setWards} / {v.removeWards}
+                  {v.wardsPlaced} / {v.wardsKilled}
                 </span>
               </td>
               <td>
-                <span>{v.totalCs}</span>
-                <span>분당 {v.csPerMin}</span>
+                <span>{v.totalMinionsKilled + v.neutralMinionsKilled}</span>
+                <span>
+                  분당{" "}
+                  {Math.round(
+                    ((v.totalMinionsKilled + v.neutralMinionsKilled) /
+                      Math.floor(matchInfo.gameDuration / 60)) *
+                      100
+                  ) / 100}
+                </span>
               </td>
               <td>
-                <div>
-                  {v.items.map((item) => (
-                    <span>{item}</span>
-                  ))}
-                  <span>{v.wardItem}</span>
-                </div>
+                {/* <div>
+                  <span>{v.item0}</span>
+                  <span>{v.item1}</span>
+                  <span>{v.item2}</span>
+                  <span>{v.item3}</span>
+                  <span>{v.item4}</span>
+                  <span>{v.item5}</span>
+                  <span>{v.trinket}</span>
+                </div> */}
               </td>
             </tr>
           ))}

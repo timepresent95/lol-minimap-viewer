@@ -17,7 +17,7 @@ export interface LeagueEntry {
   inactive: boolean;
 }
 
-export interface Rank {
+export interface RankInfo {
   leaguePoints: number;
   wins: number;
   losses: number;

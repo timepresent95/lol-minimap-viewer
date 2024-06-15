@@ -1,31 +1,40 @@
-import { getSummonerInfoByAccount } from "@/4.features/SummonerSearch/api";
+import {
+  getSummonerMatches,
+  getSummonerPlayInfo,
+} from "@/4.features/SummonerSearch/api";
 import { LeagueUi, UnrankedLeagueUi } from "@/5.entities/League/ui";
-import SummonerComponent from "@/5.entities/Summoner/ui";
+import MatchComponent from "@/5.entities/Match/ui";
+import SummonerProfile from "@/5.entities/SummonerProfile/ui";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 function SummonerPage() {
+  const { playInfo, matches } = useLoaderData() as {
+    playInfo: Awaited<ReturnType<typeof getSummonerPlayInfo>>;
+    matches: Awaited<ReturnType<typeof getSummonerMatches>>;
+  };
   const {
     gameName,
     tagLine,
     profileIconId,
     summonerLevel,
-    revisionDate,
-    ranks,
-  } = useLoaderData() as Awaited<ReturnType<typeof getSummonerInfoByAccount>>;
+    updatedAt,
+    puuid,
+    rankInfos,
+  } = playInfo;
 
-  const soloRank = ranks.find((v) => v.queue === "솔로 랭크");
-  const flexRank = ranks.find((v) => v.queue === "자유 랭크");
+  const soloRank = rankInfos.find(({ queue }) => queue === "솔로 랭크");
+  const flexRank = rankInfos.find(({ queue }) => queue === "자유 랭크");
 
   return (
     <PageContainer>
       <UserInfo>
-        <SummonerComponent
+        <SummonerProfile
           gameName={gameName}
           tagLine={tagLine}
           profileIconId={profileIconId}
           summonerLevel={summonerLevel}
-          revisionDate={revisionDate}
+          updatedAt={updatedAt}
         />
         {soloRank ? (
           <LeagueUi rankInfo={soloRank} />
@@ -38,6 +47,9 @@ function SummonerPage() {
           <UnrankedLeagueUi queue="자유 랭크" />
         )}
       </UserInfo>
+      {matches.map((v, index) => (
+        <MatchComponent key={index} matchInfo={v} myPuuid={puuid} />
+      ))}
     </PageContainer>
   );
 }
@@ -45,6 +57,7 @@ function SummonerPage() {
 const PageContainer = styled.section`
   max-width: 1024px;
   margin: 2rem auto;
+  display: flex;
 `;
 
 const UserInfo = styled.div`

@@ -1,34 +1,37 @@
 import styled from "styled-components";
 import { capitalizeFirst } from "@/6.shared/lib/string";
-import { Rank } from "../model";
+import { RankInfo } from "../model";
 
 interface Props {
-  rankInfo: Rank;
+  rankInfo: RankInfo;
 }
+
 function LeagueComponent({ rankInfo }: Props) {
-  const tierName = capitalizeFirst(rankInfo.tier);
+  const { leaguePoints, wins, losses, winingRate, tier, queue, rank } =
+    rankInfo;
+  const tierName = capitalizeFirst(tier);
   return (
     <League>
-      <LeagueTitle>{rankInfo.queue}</LeagueTitle>
+      <LeagueTitle>{queue}</LeagueTitle>
       <LeagueContent>
         <EmblemContainer>
           <Emblem
-            src={`/public/image/emblem/${tierName}.png`}
+            src={`/image/emblem/${tierName}.png`}
             alt="emblem"
             width="80%"
           />
         </EmblemContainer>
         <Info>
           <Tier>
-            {tierName} {rankInfo.rank}
+            {tierName} {rank}
           </Tier>
-          <LP>{rankInfo.leaguePoints} LP</LP>
+          <LP>{leaguePoints} LP</LP>
         </Info>
         <WinLoseContainer>
           <p>
-            {rankInfo.wins}승 {rankInfo.losses}패
+            {wins}승 {losses}패
           </p>
-          <p>승률 {rankInfo.winingRate}%</p>
+          <WinRate>승률 {winingRate}%</WinRate>
         </WinLoseContainer>
       </LeagueContent>
     </League>

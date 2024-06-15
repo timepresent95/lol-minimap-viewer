@@ -1,4 +1,7 @@
-import { getSummonerInfoByAccount } from "@/4.features/SummonerSearch/api";
+import {
+  getSummonerMatches,
+  getSummonerPlayInfo,
+} from "@/4.features/SummonerSearch/api";
 import { LoaderFunction } from "react-router-dom";
 
 export const summonerLoader: LoaderFunction = async ({ params }) => {
@@ -8,5 +11,13 @@ export const summonerLoader: LoaderFunction = async ({ params }) => {
     throw new Error("");
   }
 
-  return getSummonerInfoByAccount(gameName, tagLine);
+  const playInfo = await getSummonerPlayInfo(gameName, tagLine);
+  const matches = await getSummonerMatches(playInfo.puuid);
+
+  return {
+    playInfo,
+    matches: matches.filter(
+      (v) => v.gameMode === "ARAM" || v.gameMode === "CLASSIC"
+    ),
+  };
 };
