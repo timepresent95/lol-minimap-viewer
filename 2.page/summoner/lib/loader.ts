@@ -13,11 +13,8 @@ export const summonerLoader: LoaderFunction = async ({ params }) => {
 
   const playInfo = await getSummonerPlayInfo(gameName, tagLine);
   const matches = await getSummonerMatches(playInfo.puuid);
-
   return {
     playInfo,
-    matches: matches.filter(
-      (v) => v.gameMode === "ARAM" || v.gameMode === "CLASSIC"
-    ),
+    matches: matches,
   };
 };

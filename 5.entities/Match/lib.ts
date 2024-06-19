@@ -15,14 +15,20 @@ export function extractMe(matchInfo: Match, myPuuid: string) {
       ? matchInfo.blueTotalKill
       : matchInfo.redTotalKill;
 
+  const championCustom = formatChampionCustom(me, matchInfo.gameMode);
+
   return {
     ...me,
+    championCustom,
     killAssistantRate:
       Math.round(((me.kills + me.assists) / teamTotalKill) * 100) / 100,
   };
 }
 
 export function extractTeams(matchInfo: Match) {
+  if (matchInfo.gameMode === "CHERRY") {
+    throw new Error("use extract cheery teams when match is cherry mode");
+  }
   const teamTypes = [
     ...new Set(matchInfo.Participant.map((v) => v.teamType)),
   ].sort((a, b) => a - b);
@@ -41,6 +47,7 @@ export function extractTeams(matchInfo: Match) {
   const blueTeam = {
     members: blueTeamMember.map((v) => ({
       ...v,
+      championCustom: formatChampionCustom(v, matchInfo.gameMode),
       killAssistantRate:
         Math.round(((v.kills + v.assists) / matchInfo.blueTotalKill) * 100) /
         100,
@@ -59,6 +66,7 @@ export function extractTeams(matchInfo: Match) {
   const redTeam = {
     members: redTeamMember.map((v) => ({
       ...v,
+      championCustom: formatChampionCustom(v, matchInfo.gameMode),
       killAssistantRate:
         Math.round(((v.kills + v.assists) / matchInfo.redTotalKill) * 100) /
         100,
@@ -74,23 +82,82 @@ export function extractTeams(matchInfo: Match) {
     totalGold: matchInfo.redTotalGold,
   };
 
-  return {
-    blueTeam,
-    redTeam,
-  };
+  return [blueTeam, redTeam];
 }
 
-export function extractCherryTeams(matchInfo: Match) {
-  const teams = new Map<number, Participant[]>();
+interface CherryTeam {
+  placement: number;
+  members: [Participant, Participant];
+}
+export function extractCherryTeam(matchInfo: Match) {
+  const teamTypes = [
+    ...new Set(matchInfo.Participant.map((v) => v.playerSubteamId)),
+  ].sort((a, b) => a - b);
 
-  matchInfo.Participant.forEach((v) => {
-    let team = teams.get(v.playerSubteamId);
-    if (team === undefined) {
-      team = [];
-      teams.set(v.playerSubteamId, team);
+  const teams = matchInfo.Participant.reduce((acc, cur) => {
+    const teamIndex = teamTypes.findIndex((v) => v === cur.playerSubteamId);
+    if (teamIndex < 0) {
+      throw new Error("can not find teamIndex");
     }
-    team.push(v);
-  });
+    acc[teamIndex].placement = cur.subteamPlacement;
+    acc[teamIndex].members.push(cur);
+    return acc;
+  }, teamTypes.map(() => ({ placement: -1, members: [] })) as unknown as CherryTeam[]);
 
-  return [...teams].sort((a, b) => a[0] - b[0]).map((v) => v[1]);
+  return teams
+    .sort((a, b) => a.placement - b.placement)
+    .map(({ members }) => ({
+      members: members.map((v) => ({
+        ...v,
+        killAssistantRate:
+          Math.round(
+            ((v.kills + v.assists) /
+              members.reduce((acc, { kills }) => acc + kills, 0)) *
+              100
+          ) / 100,
+      })),
+    }));
+}
+
+//TODO: 상세 타입 설정 필요
+type ChampionAugment = { imgUrl: string | null };
+type ChampionSpell = { imgUrl: string | null };
+type ChampionPerk = { imgUrl: string | null };
+type ChampionCustoms =
+  | [ChampionAugment, ChampionAugment, ChampionAugment, ChampionAugment]
+  | [ChampionSpell, ChampionSpell, ChampionPerk, ChampionPerk];
+
+function formatChampionCustom(participantInfo: Participant, gameMode: string) {
+  const championCustom: ChampionCustoms = [
+    { imgUrl: null },
+    { imgUrl: null },
+    { imgUrl: null },
+    { imgUrl: null },
+  ];
+
+  if (gameMode === "CHERRY") {
+    championCustom[0].imgUrl =
+      participantInfo.playerAugment1 !== 0
+        ? `/image/emblem/${participantInfo.playerAugment1}.png`
+        : null;
+    championCustom[1].imgUrl =
+      participantInfo.playerAugment1 !== 0
+        ? `/image/emblem/${participantInfo.playerAugment1}.png`
+        : null;
+    championCustom[2].imgUrl =
+      participantInfo.playerAugment1 !== 0
+        ? `/image/emblem/${participantInfo.playerAugment1}.png`
+        : null;
+    championCustom[3].imgUrl =
+      participantInfo.playerAugment1 !== 0
+        ? `/image/emblem/${participantInfo.playerAugment1}.png`
+        : null;
+  } else {
+    championCustom[0].imgUrl = participantInfo.summonerSpells[0].imageUrl;
+    championCustom[1].imgUrl = participantInfo.summonerSpells[1].imageUrl;
+    championCustom[2].imgUrl = `/image/perk/${participantInfo.primaryPerk1}.png`;
+    championCustom[3].imgUrl = `/image/perk/${participantInfo.subPerkStyle}.png`;
+  }
+
+  return championCustom;
 }

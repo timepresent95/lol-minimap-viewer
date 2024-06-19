@@ -98,15 +98,17 @@ function MatchTeamComponent({ matchInfo, win, isBlueTeam, members }: Props) {
                 </span>
               </td>
               <td>
-                {/* <div>
-                  <span>{v.item0}</span>
-                  <span>{v.item1}</span>
-                  <span>{v.item2}</span>
-                  <span>{v.item3}</span>
-                  <span>{v.item4}</span>
-                  <span>{v.item5}</span>
-                  <span>{v.trinket}</span>
-                </div> */}
+                <div>
+                  {v.item0 && <img src={v.item0.imageUrl} alt={v.item0.name} />}
+                  {v.item1 && <img src={v.item1.imageUrl} alt={v.item1.name} />}
+                  {v.item2 && <img src={v.item2.imageUrl} alt={v.item2.name} />}
+                  {v.item3 && <img src={v.item3.imageUrl} alt={v.item3.name} />}
+                  {v.item4 && <img src={v.item4.imageUrl} alt={v.item4.name} />}
+                  {v.item5 && <img src={v.item5.imageUrl} alt={v.item5.name} />}
+                  {v.trinket && (
+                    <img src={v.trinket.imageUrl} alt={v.trinket.name} />
+                  )}
+                </div>
               </td>
             </tr>
           ))}

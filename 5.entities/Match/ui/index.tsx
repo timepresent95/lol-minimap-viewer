@@ -1,6 +1,6 @@
 import ChampionComponent from "@/5.entities/Champion/ui";
 import MatchTeamComponent from "./matchTeam";
-import { extractMe, extractTeams } from "../lib";
+import { extractCherryTeam, extractMe, extractTeams } from "../lib";
 import { Match } from "../model";
 import styled from "styled-components";
 
@@ -18,12 +18,21 @@ const GameDuration = styled.span``;
 
 //NOTE: Arena 형식은 불가능함
 function MatchComponent({ matchInfo, myPuuid }: Props) {
-  if (matchInfo.gameMode === "cherry") {
-    //XXX: Arena를 대응할수 있는 컴포넌트를 만들어야 함
-    return null;
+  if (matchInfo.gameMode === "CHERRY") {
+    const teams = extractCherryTeam(matchInfo);
+    return teams.map((v, i) => (
+      <MatchTeamComponent
+        key={v.members[0].playerSubteamId}
+        matchInfo={matchInfo}
+        win={i < 4}
+        isBlueTeam={i < 4}
+        members={v.members}
+      />
+    ));
   }
+
   const meInMatch = extractMe(matchInfo, myPuuid);
-  const { blueTeam, redTeam } = extractTeams(matchInfo);
+  const teams = extractTeams(matchInfo);
 
   return (
     <section>
@@ -50,9 +59,9 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
               levelDirection="right"
             />
             <div>
-              {meInMatch.summonerSpells.map(({ imageUrl, name }) => (
-                <img src={imageUrl} alt={name} />
-              ))}
+              {meInMatch.championCustom.map(({ imgUrl }) =>
+                imgUrl === null ? <div></div> : <img src={imgUrl} alt="perk" />
+              )}
             </div>
             <div>
               <span>
@@ -67,15 +76,32 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
               </span>
             </div>
           </div>
-          {/* <div>
-            <span>{meInMatch.item0}</span>
-            <span>{meInMatch.item1}</span>
-            <span>{meInMatch.item2}</span>
-            <span>{meInMatch.item3}</span>
-            <span>{meInMatch.item4}</span>
-            <span>{meInMatch.item5}</span>
-            <span>{meInMatch.trinket}</span>
-          </div> */}
+          <div>
+            {meInMatch.item0 && (
+              <img src={meInMatch.item0.imageUrl} alt={meInMatch.item0.name} />
+            )}
+            {meInMatch.item1 && (
+              <img src={meInMatch.item1.imageUrl} alt={meInMatch.item1.name} />
+            )}
+            {meInMatch.item2 && (
+              <img src={meInMatch.item2.imageUrl} alt={meInMatch.item2.name} />
+            )}
+            {meInMatch.item3 && (
+              <img src={meInMatch.item3.imageUrl} alt={meInMatch.item3.name} />
+            )}
+            {meInMatch.item4 && (
+              <img src={meInMatch.item4.imageUrl} alt={meInMatch.item4.name} />
+            )}
+            {meInMatch.item5 && (
+              <img src={meInMatch.item5.imageUrl} alt={meInMatch.item5.name} />
+            )}
+            {meInMatch.trinket && (
+              <img
+                src={meInMatch.trinket.imageUrl}
+                alt={meInMatch.trinket.name}
+              />
+            )}
+          </div>
         </div>
         <div>
           <span>킬관여 {meInMatch.killAssistantRate}%</span>
@@ -92,7 +118,7 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
         </div>
         <div>
           <div>
-            {blueTeam.members.map((v) => (
+            {teams[0].members.map((v) => (
               <div>
                 <ChampionComponent
                   championImgUrl={v.championImgUrl}
@@ -106,7 +132,7 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
             ))}
           </div>
           <div>
-            {redTeam.members.map((v) => (
+            {teams[1].members.map((v) => (
               <div>
                 <ChampionComponent
                   championImgUrl={v.championImgUrl}
@@ -124,49 +150,49 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
       <section>
         <MatchTeamComponent
           matchInfo={matchInfo}
-          win={blueTeam.win}
+          win={teams[0].win}
           isBlueTeam={true}
-          members={blueTeam.members}
+          members={teams[0].members}
         />
         <div>
           <div>
-            <div>{blueTeam.teamBaronKills}</div>
-            <div>{blueTeam.teamDragonKills}</div>
-            <div>{blueTeam.teamRiftHeraldKills}</div>
-            <div>{blueTeam.teamHordeKills}</div>
-            <div>{blueTeam.teamTowerKills}</div>
-            <div>{blueTeam.teamInhibitorKills}</div>
+            <div>{teams[0].teamBaronKills}</div>
+            <div>{teams[0].teamDragonKills}</div>
+            <div>{teams[0].teamRiftHeraldKills}</div>
+            <div>{teams[0].teamHordeKills}</div>
+            <div>{teams[0].teamTowerKills}</div>
+            <div>{teams[0].teamInhibitorKills}</div>
           </div>
           <div>
             <progress
               value={Math.round(
-                (blueTeam.totalKill /
-                  (blueTeam.totalKill + redTeam.totalKill)) *
+                (teams[0].totalKill /
+                  (teams[0].totalKill + teams[1].totalKill)) *
                   100
               )}
             />
             <progress
               value={Math.round(
-                (blueTeam.totalGold /
-                  (blueTeam.totalGold + redTeam.totalGold)) *
+                (teams[0].totalGold /
+                  (teams[0].totalGold + teams[1].totalGold)) *
                   100
               )}
             />
           </div>
           <div>
-            <div>{redTeam.teamBaronKills}</div>
-            <div>{redTeam.teamDragonKills}</div>
-            <div>{redTeam.teamRiftHeraldKills}</div>
-            <div>{redTeam.teamHordeKills}</div>
-            <div>{redTeam.teamTowerKills}</div>
-            <div>{redTeam.teamInhibitorKills}</div>
+            <div>{teams[1].teamBaronKills}</div>
+            <div>{teams[1].teamDragonKills}</div>
+            <div>{teams[1].teamRiftHeraldKills}</div>
+            <div>{teams[1].teamHordeKills}</div>
+            <div>{teams[1].teamTowerKills}</div>
+            <div>{teams[1].teamInhibitorKills}</div>
           </div>
         </div>
         <MatchTeamComponent
           matchInfo={matchInfo}
-          win={redTeam.win}
+          win={teams[1].win}
           isBlueTeam={false}
-          members={redTeam.members}
+          members={teams[1].members}
         />
       </section>
     </section>

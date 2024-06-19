@@ -85,13 +85,13 @@ export interface Participant {
   detectorWardsPlaced: number;
   wardsPlaced: number;
   wardsKilled: number;
-  item0: Item;
-  item1: Item;
-  item2: Item;
-  item3: Item;
-  item4: Item;
-  item5: Item;
-  trinket: Item;
+  item0: Item | null;
+  item1: Item | null;
+  item2: Item | null;
+  item3: Item | null;
+  item4: Item | null;
+  item5: Item | null;
+  trinket: Item | null;
   firstBloodKill: boolean;
   firstTowerKill: boolean;
   doubleKills: number;
@@ -100,6 +100,10 @@ export interface Participant {
   pentaKills: number;
   unrealKills: number;
   win: boolean;
+  playerAugment1: number;
+  playerAugment2: number;
+  playerAugment3: number;
+  playerAugment4: number;
 }
 
 interface SummonerSpell {
