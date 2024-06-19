@@ -4,6 +4,7 @@ import { Buffer } from "node:buffer";
 // NOTE: https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json
 // NOTE: https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/ko_kr/v1/perks.json
 
+//NOTE: perkStyle [결의, 8400, 7204] [지배, 8100, 7200] [정밀, 8000, 7201] [마법, 8200, 7202] [영감, 8300, 7203]
 const perkJson = [
   {
     id: 8369,
