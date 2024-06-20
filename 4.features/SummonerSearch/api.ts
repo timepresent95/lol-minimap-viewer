@@ -1,5 +1,4 @@
 import { RankInfo } from "@/5.entities/League/model";
-import { Match } from "@/5.entities/Match/model";
 import { Summoner } from "@/5.entities/SummonerProfile/model";
 import { fetchQuery } from "@/6.shared/lib/api";
 
@@ -17,7 +16,4 @@ export async function getSummonerPlayInfo(
   ]);
 }
 
-export async function getSummonerMatches(puuid: string): Promise<Match[]> {
-  const path = `/summoner/${puuid}/matches`;
-  return await fetchQuery(path, { method: "get" }, [`matches-${puuid}`]);
-}
+

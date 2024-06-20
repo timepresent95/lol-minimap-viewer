@@ -1,7 +1,5 @@
-import {
-  getSummonerMatches,
-  getSummonerPlayInfo,
-} from "@/4.features/SummonerSearch/api";
+import { getSummonerMatches } from "@/3.widget/Match/api";
+import { getSummonerPlayInfo } from "@/4.features/SummonerSearch/api";
 import { LoaderFunction } from "react-router-dom";
 
 export const summonerLoader: LoaderFunction = async ({ params }) => {

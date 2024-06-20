@@ -1,12 +1,10 @@
-import {
-  getSummonerMatches,
-  getSummonerPlayInfo,
-} from "@/4.features/SummonerSearch/api";
+import { getSummonerPlayInfo } from "@/4.features/SummonerSearch/api";
 import { LeagueUi, UnrankedLeagueUi } from "@/5.entities/League/ui";
-import MatchComponent from "@/5.entities/Match/ui";
+import MatchComponent from "@/3.widget/Match/ui";
 import SummonerProfile from "@/5.entities/SummonerProfile/ui";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import { getSummonerMatches } from "@/3.widget/Match/api";
 
 function SummonerPage() {
   const { playInfo, matches } = useLoaderData() as {
