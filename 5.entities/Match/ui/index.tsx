@@ -20,15 +20,19 @@ const GameDuration = styled.span``;
 function MatchComponent({ matchInfo, myPuuid }: Props) {
   if (matchInfo.gameMode === "CHERRY") {
     const teams = extractCherryTeam(matchInfo);
-    return teams.map((v, i) => (
-      <MatchTeamComponent
-        key={v.members[0].playerSubteamId}
-        matchInfo={matchInfo}
-        win={i < 4}
-        isBlueTeam={i < 4}
-        members={v.members}
-      />
-    ));
+    return (
+      <section>
+        {teams.map((v, i) => (
+          <MatchTeamComponent
+            key={i}
+            matchInfo={matchInfo}
+            win={i < 4}
+            isBlueTeam={i < 4}
+            members={v.members}
+          />
+        ))}
+      </section>
+    );
   }
 
   const meInMatch = extractMe(matchInfo, myPuuid);
@@ -59,8 +63,12 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
               levelDirection="right"
             />
             <div>
-              {meInMatch.championCustom.map(({ imgUrl }) =>
-                imgUrl === null ? <div></div> : <img src={imgUrl} alt="perk" />
+              {meInMatch.championCustom.map(({ imgUrl }, i) =>
+                imgUrl === null ? (
+                  <div key={i}></div>
+                ) : (
+                  <img src={imgUrl} alt="perk" key={i} />
+                )
               )}
             </div>
             <div>
@@ -118,8 +126,8 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
         </div>
         <div>
           <div>
-            {teams[0].members.map((v) => (
-              <div>
+            {teams[0].members.map((v, i) => (
+              <div key={i}>
                 <ChampionComponent
                   championImgUrl={v.championImgUrl}
                   name={v.championName}
@@ -132,8 +140,8 @@ function MatchComponent({ matchInfo, myPuuid }: Props) {
             ))}
           </div>
           <div>
-            {teams[1].members.map((v) => (
-              <div>
+            {teams[1].members.map((v, i) => (
+              <div key={i}>
                 <ChampionComponent
                   championImgUrl={v.championImgUrl}
                   name={v.championName}

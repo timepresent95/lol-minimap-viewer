@@ -24,18 +24,20 @@ function MatchTeamComponent({ matchInfo, win, isBlueTeam, members }: Props) {
     <section>
       <table>
         <thead>
-          <th>
-            <span>{gameResult}</span>&nbsp;({teamType})
-          </th>
-          <th>KDA</th>
-          <th>피해량</th>
-          <th>와드</th>
-          <th>CS</th>
-          <th>아이템</th>
+          <tr>
+            <th>
+              <span>{gameResult}</span>&nbsp;({teamType})
+            </th>
+            <th>KDA</th>
+            <th>피해량</th>
+            <th>와드</th>
+            <th>CS</th>
+            <th>아이템</th>
+          </tr>
         </thead>
         <tbody>
-          {members.map((v) => (
-            <tr>
+          {members.map((v, i) => (
+            <tr key={i}>
               <ChampionInfo>
                 <ChampionComponent
                   championImgUrl={v.championImgUrl}

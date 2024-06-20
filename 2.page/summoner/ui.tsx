@@ -47,9 +47,11 @@ function SummonerPage() {
           <UnrankedLeagueUi queue="자유 랭크" />
         )}
       </UserInfo>
-      {matches.map((v, index) => (
-        <MatchComponent key={index} matchInfo={v} myPuuid={puuid} />
-      ))}
+      <div>
+        {matches.map((v) => (
+          <MatchComponent key={v.gameId} matchInfo={v} myPuuid={puuid} />
+        ))}
+      </div>
     </PageContainer>
   );
 }
